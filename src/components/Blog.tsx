@@ -2,9 +2,11 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { blogPosts } from '@/lib/blog-data';
+import { getBlogPosts } from '@/lib/firebase-data';
 
-export default function Blog() {
+export default async function Blog() {
+  const blogPosts = await getBlogPosts();
+
   return (
     <section id="blog" className="py-20">
       <div className="container mx-auto px-4">

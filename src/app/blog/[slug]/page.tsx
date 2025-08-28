@@ -3,17 +3,18 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { blogPosts } from '@/lib/blog-data';
+import { getBlogPost, getBlogPosts } from '@/lib/firebase-data';
 import { notFound } from 'next/navigation';
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const blogPosts = await getBlogPosts();
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getBlogPost(params.slug);
 
   if (!post) {
     notFound();

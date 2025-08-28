@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { projects } from '@/lib/portfolio-data';
+import { getProjects } from '@/lib/firebase-data';
 import Link from 'next/link';
 
-export default function Portfolio() {
+export default async function Portfolio() {
+  const projects = await getProjects();
+  
   return (
     <section id="portfolio" className="py-20">
       <div className="container mx-auto px-4">

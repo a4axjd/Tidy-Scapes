@@ -2,7 +2,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Portfolio from '@/components/Portfolio';
-import Visualizer from '@/components/Visualizer';
 import Testimonials from '@/components/Testimonials';
 import Faq from '@/components/Faq';
 import Blog from '@/components/Blog';
@@ -17,7 +16,6 @@ export default function Home() {
         <Hero />
         <Services />
         <Portfolio />
-        <Visualizer />
         <Testimonials />
         <Faq />
         <Blog />

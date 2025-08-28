@@ -12,18 +12,18 @@ export default function Contact() {
         <form className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input id="name" placeholder="John Doe" className="bg-background/80 text-foreground" />
+              <Label htmlFor="home-name">Full Name</Label>
+              <Input id="home-name" placeholder="John Doe" className="bg-background/80 text-foreground" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="john.doe@example.com" className="bg-background/80 text-foreground" />
+              <Label htmlFor="home-email">Email Address</Label>
+              <Input id="home-email" type="email" placeholder="john.doe@example.com" className="bg-background/80 text-foreground" />
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="service">Service of Interest</Label>
+            <Label htmlFor="home-service">Service of Interest</Label>
             <Select>
-              <SelectTrigger id="service" className="bg-background/80 text-foreground">
+              <SelectTrigger id="home-service" className="bg-background/80 text-foreground">
                 <SelectValue placeholder="Select a service" />
               </SelectTrigger>
               <SelectContent>
@@ -35,8 +35,8 @@ export default function Contact() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="message">Your Message</Label>
-            <Textarea id="message" placeholder="Tell us about your project..." rows={5} className="bg-background/80 text-foreground" />
+            <Label htmlFor="home-message">Your Message</Label>
+            <Textarea id="home-message" placeholder="Tell us about your project..." rows={5} className="bg-background/80 text-foreground" />
           </div>
           <div className="text-center">
             <Button type="submit" size="lg" variant="secondary">Submit Request</Button>

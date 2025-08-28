@@ -16,7 +16,7 @@ export default function Header() {
             <Link href="/gallery" className="transition-colors hover:text-primary">Gallery</Link>
             <Link href="/visualizer" className="transition-colors hover:text-primary">AI Visualizer</Link>
             <Link href="/blog" className="transition-colors hover:text-primary">Blog</Link>
-            <Link href="/#contact" className="transition-colors hover:text-primary">Contact</Link>
+            <Link href="/contact" className="transition-colors hover:text-primary">Contact</Link>
           </nav>
         </div>
       </div>

@@ -1,11 +1,53 @@
+"use client";
+
+import { useState } from 'react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ContactPageContent() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [service, setService] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !service || !message) {
+      toast({ title: "Error", description: "Please fill out all fields.", variant: "destructive" });
+      return;
+    }
+    setLoading(true);
+    try {
+      await addDoc(collection(db, 'contacts'), {
+        name,
+        email,
+        service,
+        message,
+        timestamp: serverTimestamp(),
+      });
+      toast({ title: "Success", description: "Your message has been sent!" });
+      // Reset form
+      setName('');
+      setEmail('');
+      setService('');
+      setMessage('');
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to send message.", variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -35,20 +77,20 @@ export default function ContactPageContent() {
           </div>
           <div className="bg-card p-8 rounded-lg shadow-lg">
             <h3 className="text-2xl font-bold font-headline mb-6">Send Us a Message</h3>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" placeholder="John Doe" />
+                  <Input id="name" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="john.doe@example.com" />
+                  <Input id="email" type="email" placeholder="john.doe@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="service">Service of Interest</Label>
-                <Select>
+                <Select onValueChange={setService} value={service}>
                   <SelectTrigger id="service">
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
@@ -62,10 +104,12 @@ export default function ContactPageContent() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Your Message</Label>
-                <Textarea id="message" placeholder="Tell us about your project..." rows={5} />
+                <Textarea id="message" placeholder="Tell us about your project..." rows={5} value={message} onChange={(e) => setMessage(e.target.value)} />
               </div>
               <div>
-                <Button type="submit" size="lg" className="w-full">Submit Request</Button>
+                <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                    {loading ? 'Submitting...' : 'Submit Request'}
+                </Button>
               </div>
             </form>
           </div>

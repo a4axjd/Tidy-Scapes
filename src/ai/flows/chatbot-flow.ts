@@ -10,14 +10,14 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
-const ChatInputSchema = z.string();
+const ChatInputSchema = z.object({ prompt: z.string() });
 export type ChatInput = z.infer<typeof ChatInputSchema>;
 
 const ChatOutputSchema = z.string();
 export type ChatOutput = z.infer<typeof ChatOutputSchema>;
 
-export async function chat(message: ChatInput): Promise<ChatOutput> {
-  return chatFlow(message);
+export async function chat(message: string): Promise<ChatOutput> {
+  return chatFlow({ prompt: message });
 }
 
 const prompt = ai.definePrompt({
@@ -39,8 +39,8 @@ const chatFlow = ai.defineFlow(
     inputSchema: ChatInputSchema,
     outputSchema: ChatOutputSchema,
   },
-  async (message) => {
-    const { output } = await prompt(message);
+  async (input) => {
+    const { output } = await prompt(input);
     return output!;
   }
 );

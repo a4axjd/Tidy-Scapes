@@ -13,6 +13,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link href="/#services" className="transition-colors hover:text-primary">Services</Link>
             <Link href="/portfolio" className="transition-colors hover:text-primary">Portfolio</Link>
+            <Link href="/gallery" className="transition-colors hover:text-primary">Gallery</Link>
             <Link href="/visualizer" className="transition-colors hover:text-primary">AI Visualizer</Link>
             <Link href="/blog" className="transition-colors hover:text-primary">Blog</Link>
             <Link href="/#contact" className="transition-colors hover:text-primary">Contact</Link>

@@ -70,6 +70,21 @@ export default function ContactPageContent() {
             </form>
           </div>
         </div>
+        <div className="mt-16">
+            <h3 className="text-2xl font-bold font-headline mb-6 text-center">Our Location</h3>
+            <div className="aspect-video w-full max-w-5xl mx-auto bg-muted rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.608356161476!2d-73.98784438459418!3d40.74844097932824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!3f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1620312015888!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Google Map of TidyScapes Location"
+                ></iframe>
+            </div>
+        </div>
       </div>
     </section>
   );

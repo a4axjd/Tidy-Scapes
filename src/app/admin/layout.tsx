@@ -15,11 +15,15 @@ import { useToast } from '@/hooks/use-toast';
 
 function NotificationHandler() {
     const { toast } = useToast();
-    const [permission, setPermission] = useState(Notification.permission);
+    const [permission, setPermission] = useState<NotificationPermission | undefined>(undefined);
     const serviceWorkerRef = useRef<ServiceWorkerRegistration | null>(null);
     const lastCheckTime = useRef(new Date());
 
     useEffect(() => {
+        if (typeof window !== 'undefined' && 'Notification' in window) {
+            setPermission(Notification.permission);
+        }
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(registration => {
@@ -42,10 +46,13 @@ function NotificationHandler() {
 
                     if(messageTimestamp > lastCheckTime.current) {
                         console.log("New message: ", messageData);
-                        if (Notification.permission === 'granted' && serviceWorkerRef.current?.active) {
-                            navigator.serviceWorker.controller?.postMessage({
+                        if (Notification.permission === 'granted' && navigator.serviceWorker.controller) {
+                            navigator.serviceWorker.controller.postMessage({
                                 type: 'NEW_MESSAGE',
-                                payload: messageData,
+                                payload: {
+                                    title: `New message from ${messageData.name}`,
+                                    body: messageData.message,
+                                },
                             });
                         }
                     }
@@ -128,10 +135,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <>
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#377D34" />
-      </head>
       <SidebarProvider>
           <Sidebar>
               <SidebarHeader>

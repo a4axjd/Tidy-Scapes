@@ -5,6 +5,5 @@ import {dev} from 'genkit';
 
 // Import your flows here.
 import './flows/visualize-landscaping-ideas';
-import './flows/chatbot-flow';
 
 dev();

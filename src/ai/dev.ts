@@ -1,5 +1,10 @@
-import { config } from 'dotenv';
+import {config} from 'dotenv';
 config();
 
-import '@/ai/flows/visualize-landscaping-ideas.ts';
-import '@/ai/flows/chatbot-flow.ts';
+import {dev} from 'genkit';
+
+// Import your flows here.
+import './flows/visualize-landscaping-ideas';
+import './flows/chatbot-flow';
+
+dev();

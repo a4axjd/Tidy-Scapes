@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Analytics from '@/components/Analytics';
+import Chatbot from '@/components/Chatbot';
 
 export const metadata: Metadata = {
   title: 'TidyScapes Digital',
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Analytics />
         {children}
         <Toaster />
+        <Chatbot />
       </body>
     </html>
   );

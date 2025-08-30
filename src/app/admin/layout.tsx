@@ -8,7 +8,7 @@ import { collection, onSnapshot, query, where, Timestamp } from 'firebase/firest
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Newspaper, Image as ImageIcon, MessageSquare, LogOut, Leaf } from 'lucide-react';
+import { LayoutDashboard, Newspaper, Image as ImageIcon, MessageSquare, LogOut, Leaf, BarChart3 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
@@ -164,6 +164,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                           <Link href="/admin/messages"><MessageSquare />Messages</Link>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
+                  <SidebarMenuItem>
+                      <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/analytics')}>
+                          <Link href="/admin/analytics"><BarChart3 />Analytics</Link>
+                      </SidebarMenuButton>
+                  </SidebarMenuItem>
               </SidebarMenu>
               <SidebarFooter>
                   <div className="flex items-center p-2 space-x-3">
@@ -197,5 +202,6 @@ function getPageTitle(pathname: string) {
     if (pathname.startsWith('/admin/blog')) return 'Blog Posts';
     if (pathname.startsWith('/admin/portfolio')) return 'Portfolio';
     if (pathname.startsWith('/admin/messages')) return 'Messages';
+    if (pathname.startsWith('/admin/analytics')) return 'Analytics';
     return 'Dashboard';
 }

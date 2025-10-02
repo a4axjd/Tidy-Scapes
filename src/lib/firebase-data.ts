@@ -1,9 +1,8 @@
 import { db } from './firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import type { DocumentData } from 'firebase/firestore';
-import projects from '@/lib/placeholder-images.json';
+import { collection, getDocs, query, where, DocumentData } from 'firebase/firestore';
 
 export interface BlogPost {
+    id: string;
     slug: string;
     image: string;
     hint: string;
@@ -14,6 +13,7 @@ export interface BlogPost {
 }
 
 export interface Project {
+    id: string;
     slug: string;
     image: string;
     hint: string;
@@ -22,20 +22,35 @@ export interface Project {
     details: string[];
 }
 
+async function fetchCollection<T>(name: string): Promise<T[]> {
+    const querySnapshot = await getDocs(collection(db, name));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T));
+}
+
 export async function getBlogPosts(): Promise<BlogPost[]> {
-    return new Promise(resolve => resolve(projects.blogPosts as any));
+    return fetchCollection<BlogPost>('blogPosts');
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-    const post = projects.blogPosts.find(p => p.slug === slug);
-    return new Promise(resolve => resolve(post as any));
+    const q = query(collection(db, 'blogPosts'), where('slug', '==', slug));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+        return null;
+    }
+    const doc = querySnapshot.docs[0];
+    return { id: doc.id, ...doc.data() } as BlogPost;
 }
 
 export async function getProjects(): Promise<Project[]> {
-    return new Promise(resolve => resolve(projects.projects as any));
+    return fetchCollection<Project>('projects');
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
-    const project = projects.projects.find(p => p.slug === slug);
-    return new Promise(resolve => resolve(project as any));
+    const q = query(collection(db, 'projects'), where('slug', '==', slug));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+        return null;
+    }
+    const doc = querySnapshot.docs[0];
+    return { id: doc.id, ...doc.data() } as Project;
 }

@@ -1,95 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { auth, db } from '@/lib/firebase';
-import { collection, onSnapshot, query, where, Timestamp } from 'firebase/firestore';
+import { auth } from '@/lib/firebase';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, Newspaper, Image as ImageIcon, MessageSquare, LogOut, Leaf } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { useToast } from '@/hooks/use-toast';
-
-function NotificationHandler() {
-    const { toast } = useToast();
-    const [permission, setPermission] = useState<NotificationPermission | undefined>(undefined);
-    const serviceWorkerRef = useRef<ServiceWorkerRegistration | null>(null);
-    const lastCheckTime = useRef(new Date());
-
-    useEffect(() => {
-        if (typeof window !== 'undefined' && 'Notification' in window) {
-            setPermission(Notification.permission);
-        }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => {
-                    serviceWorkerRef.current = registration;
-                })
-                .catch(err => console.error('Service Worker registration failed:', err));
-        }
-
-        const q = query(
-            collection(db, 'contacts'), 
-            where("timestamp", ">", Timestamp.fromDate(lastCheckTime.current))
-        );
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    // Check if the message is new since the listener was attached
-                    const messageData = change.doc.data();
-                    const messageTimestamp = (messageData.timestamp as Timestamp).toDate();
-
-                    if(messageTimestamp > lastCheckTime.current) {
-                        console.log("New message: ", messageData);
-                        if (Notification.permission === 'granted' && navigator.serviceWorker.controller) {
-                            navigator.serviceWorker.controller.postMessage({
-                                type: 'NEW_MESSAGE',
-                                payload: {
-                                    title: `New message from ${messageData.name}`,
-                                    body: messageData.message,
-                                },
-                            });
-                        }
-                    }
-                }
-            });
-            // Update last check time to now to avoid re-notifying for old messages on listener re-init
-             if (snapshot.docs.length > 0) {
-                lastCheckTime.current = new Date();
-             }
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    const requestPermission = () => {
-        Notification.requestPermission().then(permission => {
-            setPermission(permission);
-            if (permission === 'granted') {
-                toast({ title: "Notifications enabled!", description: "You'll be notified of new messages." });
-            } else {
-                toast({ title: "Notifications denied", description: "You won't receive notifications.", variant: "destructive" });
-            }
-        });
-    };
-
-    if (permission === 'default') {
-        return (
-            <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4" role="alert">
-                <p className="font-bold">Enable Notifications</p>
-                <p>Get notified when you receive new messages.</p>
-                <Button onClick={requestPermission} size="sm" className="mt-2">Enable</Button>
-            </div>
-        )
-    }
-
-    return null;
-}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -145,8 +65,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </SidebarHeader>
               <SidebarMenu>
                   <SidebarMenuItem>
-                      <SidebarMenuButton asChild isActive={pathname === '/admin'}>
-                          <Link href="/admin"><LayoutDashboard />Dashboard</Link>
+                      <SidebarMenuButton asChild isActive={pathname === '/admin/analytics'}>
+                          <Link href="/admin/analytics"><LayoutDashboard />Dashboard</Link>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
@@ -185,7 +105,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <SidebarTrigger className="md:hidden" />
                   <h1 className="text-2xl font-semibold ml-2 md:ml-0">{getPageTitle(pathname)}</h1>
               </div>
-              <NotificationHandler />
               {children}
           </main>
       </SidebarProvider>
@@ -197,5 +116,6 @@ function getPageTitle(pathname: string) {
     if (pathname.startsWith('/admin/blog')) return 'Blog Posts';
     if (pathname.startsWith('/admin/gallery')) return 'Gallery';
     if (pathname.startsWith('/admin/messages')) return 'Messages';
+    if (pathname.startsWith('/admin/analytics')) return 'Analytics';
     return 'Dashboard';
 }

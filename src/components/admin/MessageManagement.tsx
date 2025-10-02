@@ -78,7 +78,7 @@ export default function MessageManagement() {
                             <TableCell className="max-w-xs truncate">{msg.message}</TableCell>
                              <TableCell className="text-right">
                                 <Accordion type="single" collapsible className="w-full">
-                                    <AccordionItem value="item-1" className="border-b-0">
+                                    <AccordionItem value={msg.id} className="border-b-0">
                                         <AccordionTrigger className="p-0 hover:no-underline"></AccordionTrigger>
                                         <AccordionContent>
                                             {msg.message}

@@ -17,7 +17,7 @@ interface MobileNavProps {
 }
 
 const TidyScapesLogo = () => (
-    <Image src="/file.svg" alt="Tidy Scapes Logo" width={48} height={48} />
+    <Image src="/TidyScapes.png" alt="Tidy Scapes Logo" width={48} height={48} />
 );
 
 export default function MobileNav({ navLinks }: MobileNavProps) {

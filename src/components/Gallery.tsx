@@ -1,10 +1,41 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { getProjects } from '@/lib/firebase-data';
 import { Card, CardContent } from '@/components/ui/card';
+import { useState, useEffect } from 'react';
+import type { Project } from '@/lib/firebase-data';
 
-export default async function Gallery() {
-  const projects = await getProjects();
+
+export default function Gallery() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const fetchedProjects = await getProjects();
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="gallery" className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">Gallery</h2>
+          <div className="text-center">Loading gallery...</div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="gallery" className="py-20">

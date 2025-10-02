@@ -1,11 +1,42 @@
+"use client";
+
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { getProjects } from '@/lib/firebase-data';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import type { Project } from '@/lib/firebase-data';
 
-export default async function Portfolio() {
-  const projects = await getProjects();
+export default function Portfolio() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const fetchedProjects = await getProjects();
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="portfolio" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">Our Recent Work</h2>
+          {/* You can add a skeleton loader here if you want */}
+          <div className="text-center">Loading projects...</div>
+        </div>
+      </section>
+    );
+  }
   
   return (
     <section id="portfolio" className="py-20 bg-card">

@@ -1,23 +1,53 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { TreePalm, Tractor, Flower } from 'lucide-react';
+import { TreePalm, Tractor, Flower, Wrench, Leaf, Scissors, Move, Sprout, Axe } from 'lucide-react';
 
 const services = [
   {
-    icon: <TreePalm className="h-8 w-8 text-primary" />,
-    title: 'Landscape Design',
-    description: 'Crafting unique outdoor spaces that reflect your style and enhance your property\'s beauty.',
+    icon: <Wrench className="h-8 w-8 text-primary" />,
+    title: 'Landscape Maintenance',
+    description: 'Comprehensive care to keep your outdoor spaces looking their best year-round.',
+  },
+  {
+    icon: <Leaf className="h-8 w-8 text-primary" />,
+    title: 'Shrub Care',
+    description: 'Specialized care plans to ensure your shrubs are healthy, vibrant, and well-maintained.',
+  },
+  {
+    icon: <Scissors className="h-8 w-8 text-primary" />,
+    title: 'Shrub Pruning & Trimming',
+    description: 'Expert pruning and trimming to shape shrubs for optimal health and aesthetics.',
+  },
+  {
+    icon: <Move className="h-8 w-8 text-primary" />,
+    title: 'Shrub Transplanting',
+    description: 'Safely moving and transplanting shrubs to new locations within your landscape.',
+  },
+  {
+    icon: <Sprout className="h-8 w-8 text-primary" />,
+    title: 'Tree Planting',
+    description: 'Professional planting services for new trees to enhance your property.',
   },
   {
     icon: <Tractor className="h-8 w-8 text-primary" />,
-    title: 'Garden Maintenance',
-    description: 'Keeping your landscape vibrant and healthy with regular care, including mowing, pruning, and fertilization.',
+    title: 'Lawn Care',
+    description: 'Complete lawn care services including mowing, fertilization, and weed control.',
   },
   {
     icon: <Flower className="h-8 w-8 text-primary" />,
-    title: 'Custom Projects',
-    description: 'Bringing your specific landscaping ideas to life with custom installations and renovations.',
+    title: 'Shrub Planting',
+    description: 'Planting new shrubs to add beauty and structure to your garden beds.',
+  },
+  {
+    icon: <Axe className="h-8 w-8 text-primary" />,
+    title: 'Shrub Removal',
+    description: 'Safe and efficient removal of unwanted or overgrown shrubs from your property.',
+  },
+  {
+    icon: <TreePalm className="h-8 w-8 text-primary" />,
+    title: 'Tree Care Services',
+    description: 'A full range of tree care services, including health assessments and maintenance.',
   },
 ];
 

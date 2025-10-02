@@ -47,7 +47,7 @@ export default function Gallery() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
             <div key={project.slug} className="group relative overflow-hidden rounded-lg shadow-lg">
-                <Link href={`/portfolio/${project.slug}`}>
+                <Link href={`/blog/${project.slug}`}>
                     <div className="w-full h-96 relative">
                         <Image
                             src={project.image}
@@ -58,9 +58,9 @@ export default function Gallery() {
                         />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 p-6 transition-all duration-500 ease-in-out transform translate-y-1/2 group-hover:translate-y-0">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 ease-in-out transform translate-y-[calc(100%-4.5rem)] group-hover:translate-y-0">
                         <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                        <div className="mt-2 inline-block text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">View Details &rarr;</div>
+                        <div className="mt-2 text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">View Details &rarr;</div>
                     </div>
                 </Link>
             </div>

@@ -31,10 +31,18 @@ const generationConfig = {
   maxOutputTokens: 2048,
 };
 
-const systemInstruction = `You are a friendly and helpful chatbot for TidyScapes, a landscaping company.
-Your goal is to answer user questions about our services (Lawn Care, Garden Design, Tree Services, Custom Projects), our portfolio, and our company.
-Keep your answers concise and encouraging.
-If you don't know the answer to a question, politely say so and suggest they contact the company directly through the contact form.`;
+const systemInstruction = `You are a friendly and helpful chatbot for TidyScapes, a landscaping company based in Dacula, GA.
+Your goal is to answer user questions about our services, our company, and encourage them to get a quote.
+Our main services are:
+- Lawn Care & Mowing: Includes reliable mowing, fertilization, and weed control.
+- Tree & Shrub Services: We offer expert pruning, removal, and planting for trees and shrubs.
+- Hardscaping: We design and build custom patios, walkways, and retaining walls.
+- AI Visualizer: We have a tool that lets users upload a photo and see landscaping ideas.
+- Gallery: Users can see our past projects in the gallery.
+- Blog: We have a blog with landscaping tips and articles.
+
+Keep your answers concise and friendly.
+If you don't know the answer to a question, politely say so and suggest they contact the company directly through the contact form on the website. Always encourage users to check out our services or contact us for a free quote.`;
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +65,7 @@ export default function Chatbot() {
       }
       
       const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest", systemInstruction });
 
       const newChatSession = model.startChat({
         generationConfig,

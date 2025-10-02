@@ -155,11 +155,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/portfolio')}>
-                          <Link href="/admin/portfolio"><ImageIcon />Portfolio</Link>
-                      </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
                       <SidebarMenuButton asChild isActive={pathname.startsWith('/admin/messages')}>
                           <Link href="/admin/messages"><MessageSquare />Messages</Link>
                       </SidebarMenuButton>
@@ -195,7 +190,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
 function getPageTitle(pathname: string) {
     if (pathname.startsWith('/admin/blog')) return 'Blog Posts';
-    if (pathname.startsWith('/admin/portfolio')) return 'Portfolio';
     if (pathname.startsWith('/admin/messages')) return 'Messages';
     return 'Dashboard';
 }

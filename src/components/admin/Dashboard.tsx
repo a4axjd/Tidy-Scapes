@@ -9,7 +9,6 @@ import { Newspaper, ImageIcon, MessageSquare } from 'lucide-react';
 export default function Dashboard() {
   const [counts, setCounts] = useState({
     blogPosts: 0,
-    portfolioItems: 0,
     messages: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -18,13 +17,11 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const blogSnapshot = await getDocs(collection(db, 'blogPosts'));
-        const portfolioSnapshot = await getDocs(collection(db, 'projects'));
         // Assuming messages are stored in a 'contacts' collection
         const messagesSnapshot = await getDocs(collection(db, 'contacts'));
 
         setCounts({
           blogPosts: blogSnapshot.size,
-          portfolioItems: portfolioSnapshot.size,
           messages: messagesSnapshot.size,
         });
       } catch (error) {
@@ -51,20 +48,6 @@ export default function Dashboard() {
             <div className="text-2xl font-bold">{loading ? '...' : counts.blogPosts}</div>
             <p className="text-xs text-muted-foreground">
               Total number of blog posts
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Portfolio Items
-            </CardTitle>
-            <ImageIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{loading ? '...' : counts.portfolioItems}</div>
-            <p className="text-xs text-muted-foreground">
-              Total number of portfolio projects
             </p>
           </CardContent>
         </Card>

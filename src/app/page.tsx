@@ -5,7 +5,6 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import Portfolio from '@/components/Portfolio';
 import Faq from '@/components/Faq';
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
         <Hero />
         <Services />
         <WhyChooseUs />
-        <Portfolio />
         <Testimonials />
         <Faq />
         <Contact />

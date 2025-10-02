@@ -27,7 +27,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold">Quick Links</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/#services" className="text-foreground/70 hover:text-primary transition-colors">Services</Link></li>
-              <li><Link href="/portfolio" className="text-foreground/70 hover:text-primary transition-colors">Portfolio</Link></li>
+              <li><Link href="/gallery" className="text-foreground/70 hover:text-primary transition-colors">Gallery</Link></li>
               <li><Link href="/contact" className="text-foreground/70 hover:text-primary transition-colors">Contact Us</Link></li>
               <li><Link href="/about" className="text-foreground/70 hover:text-primary transition-colors">About Us</Link></li>
             </ul>

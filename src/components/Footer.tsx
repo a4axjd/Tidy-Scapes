@@ -19,6 +19,10 @@ export default function Footer() {
             <p className="mt-4 text-sm text-foreground/70">
               Transforming your outdoor space into a beautiful and functional extension of your home.
             </p>
+             <p className="mt-4 text-sm text-foreground/70">
+              Dacula, GA 30019, USA <br/>
+             (470) 925-2782
+            </p>
           </div>
           <div>
             <h3 className="text-lg font-bold">Quick Links</h3>
@@ -26,7 +30,7 @@ export default function Footer() {
               <li><Link href="/#services" className="text-foreground/70 hover:text-primary transition-colors">Services</Link></li>
               <li><Link href="/gallery" className="text-foreground/70 hover:text-primary transition-colors">Gallery</Link></li>
               <li><Link href="/contact" className="text-foreground/70 hover:text-primary transition-colors">Contact Us</Link></li>
-              <li><Link href="/about" className="text-foreground/70 hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link href="/blog" className="text-foreground/70 hover:text-primary transition-colors">Blog</Link></li>
             </ul>
           </div>
           <div>

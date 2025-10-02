@@ -50,6 +50,13 @@ export default function MobileNav({ navLinks }: MobileNavProps) {
                     {link.text}
                 </Link>
             ))}
+             <Link
+                href="/contact"
+                className="transition-colors hover:text-primary"
+                onClick={() => setIsOpen(false)}
+            >
+                Contact
+            </Link>
             </nav>
             <div className="mt-auto">
                 <Button asChild className="w-full" size="lg">

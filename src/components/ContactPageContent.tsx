@@ -63,15 +63,15 @@ export default function ContactPageContent() {
             <div className="space-y-4 text-lg">
                 <div className="flex items-center gap-4">
                     <Phone className="w-6 h-6 text-primary" />
-                    <span>(123) 456-7890</span>
+                    <span>(470) 925-2782</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <Mail className="w-6 h-6 text-primary" />
-                    <span>hello@tidyscapes.com</span>
+                    <span>hello@tidyscapesllc.com</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <MapPin className="w-6 h-6 text-primary" />
-                    <span>123 Green St, Meadowville, 12345</span>
+                    <span>Dacula, GA 30019, USA</span>
                 </div>
             </div>
           </div>
@@ -96,8 +96,8 @@ export default function ContactPageContent() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lawn-care">Lawn Care</SelectItem>
-                    <SelectItem value="garden-design">Garden Design</SelectItem>
-                    <SelectItem value="tree-services">Tree Services</SelectItem>
+                    <SelectItem value="tree-service">Tree Service</SelectItem>
+                    <SelectItem value="hardscaping">Hardscaping</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
@@ -115,17 +115,17 @@ export default function ContactPageContent() {
           </div>
         </div>
         <div className="mt-16">
-            <h3 className="text-2xl font-bold font-headline mb-6 text-center">Our Location</h3>
-            <div className="aspect-video w-full max-w-5xl mx-auto bg-muted rounded-lg overflow-hidden shadow-lg">
+            <h3 className="text-2xl font-bold font-headline mb-6 text-center">Our Service Area</h3>
+             <div className="aspect-video w-full max-w-5xl mx-auto bg-muted rounded-lg overflow-hidden shadow-lg">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.608356161476!2d-73.98784438459418!3d40.74844097932824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!3f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1620312015888!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105842.82512993134!2d-84.0012440498779!3d34.03560790104085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5b1a5fe135555%3A0x42685a53696653d9!2sDacula%2C%20GA%2030019!5e0!3m2!1sen!2sus!4v1620312015888!5m2!1sen!2sus"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen={true}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Google Map of TidyScapes Location"
+                    title="Tidy Scapes Service Area Map"
                 ></iframe>
             </div>
         </div>

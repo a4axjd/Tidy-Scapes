@@ -6,15 +6,16 @@ import MobileNav from './MobileNav';
 import Image from 'next/image';
 
 const navLinks = [
-    { href: "/#services", text: "Services" },
+    { href: "/lawn-care", text: "Lawn Care" },
+    { href: "/tree-service", text: "Tree Service" },
+    { href: "/hardscaping", text: "Hardscaping" },
     { href: "/gallery", text: "Gallery" },
     { href: "/blog", text: "Blog" },
     { href: "/visualizer", text: "AI Visualizer" },
-    { href: "/contact", text: "Contact" },
 ];
 
 const TidyScapesLogo = () => (
-    <Image src="/file.svg" alt="Tidy Scapes Logo" width={48} height={48} />
+    <Image src="/file.svg" alt="Tidy Scapes Logo" width={38} height={38} />
 );
 
 export default function Header() {
@@ -36,7 +37,7 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
             <Button asChild className="font-bold text-sm px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors">
-                <Link href="#contact">Get a Quote</Link>
+                <Link href="/contact">Get a Quote</Link>
             </Button>
             <div className="md:hidden">
               <MobileNav navLinks={navLinks} />

@@ -10,13 +10,13 @@ export default function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-48 text-center text-white">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-black tracking-tight" data-ai-hint="landscaped garden">
-            Transforming Spaces, Enhancing Lives
+            Premier Landscaping & Lawn Care in Dacula, GA
           </h1>
           <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
             Your trusted partner for exceptional landscaping services. From design to maintenance, we bring your vision to life.
           </p>
           <Button asChild size="lg" className="mt-8 inline-block bg-primary text-primary-foreground font-bold text-base px-8 py-3 rounded-lg hover:bg-primary/80 transition-colors">
-            <Link href="#services">Explore Our Services</Link>
+            <Link href="/contact">Get a Free Quote</Link>
           </Button>
         </div>
       </div>

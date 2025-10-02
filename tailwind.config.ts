@@ -10,8 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['PT Sans', 'sans-serif'],
-        headline: ['PT Sans', 'sans-serif'],
+        body: ['"Work Sans"', 'sans-serif'],
+        headline: ['"Work Sans"', 'sans-serif'],
+        display: ['"Work Sans"'],
         code: ['monospace'],
       },
       colors: {
@@ -70,6 +71,7 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        xl: "0.75rem",
       },
       keyframes: {
         'accordion-down': {

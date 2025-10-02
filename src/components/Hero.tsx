@@ -1,28 +1,24 @@
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center text-center text-white">
-      <Image
-        src="https://picsum.photos/1920/1080"
-        alt="Beautifully landscaped garden"
-        fill
-        className="object-cover brightness-50"
-        priority
-        data-ai-hint="landscaped garden"
-      />
-      <div className="relative z-10 p-4 max-w-3xl animate-fade-in-up">
-        <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4">
-          Transform Your Outdoor Space
-        </h1>
-        <p className="text-lg md:text-xl mb-8">
-          Professional lawn care, garden design, and tree services to bring your vision to life.
-        </p>
-        <Button asChild size="lg">
-          <Link href="#contact">Get a Free Quote</Link>
-        </Button>
+    <section 
+      className="relative bg-cover bg-center" 
+      style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("https://picsum.photos/seed/hero/1920/1080")'}}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-48 text-center text-white">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight" data-ai-hint="landscaped garden">
+            Transforming Spaces, Enhancing Lives
+          </h1>
+          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto">
+            Your trusted partner for exceptional landscaping services. From design to maintenance, we bring your vision to life.
+          </p>
+          <Button asChild size="lg" className="mt-8 inline-block bg-primary text-primary-foreground font-bold text-base px-8 py-3 rounded-lg hover:bg-primary/80 transition-colors">
+            <Link href="#services">Explore Our Services</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

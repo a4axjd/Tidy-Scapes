@@ -1,67 +1,45 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scissors, Sprout, Trees, Hand, Leaf, Shrub, Tractor, Axe, TreePine } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { TreePalm, Tractor, Flower } from 'lucide-react';
 
 const services = [
   {
-    icon: <Tractor className="h-10 w-10 text-primary" />,
-    title: 'Landscape Maintenance',
-    description: 'Ongoing care to keep your outdoor spaces pristine, including weeding, mulching, and seasonal cleanups.',
+    icon: <TreePalm className="h-8 w-8 text-primary" />,
+    title: 'Landscape Design',
+    description: 'Crafting unique outdoor spaces that reflect your style and enhance your property\'s beauty.',
   },
   {
-    icon: <Shrub className="h-10 w-10 text-primary" />,
-    title: 'Shrub Care',
-    description: 'Comprehensive shrub care including fertilization, disease control, and health assessments.',
+    icon: <Tractor className="h-8 w-8 text-primary" />,
+    title: 'Garden Maintenance',
+    description: 'Keeping your landscape vibrant and healthy with regular care, including mowing, pruning, and fertilization.',
   },
   {
-    icon: <Scissors className="h-10 w-10 text-primary" />,
-    title: 'Shrub Pruning & Trimming',
-    description: 'Expert pruning and trimming to shape shrubs, promote healthy growth, and enhance flowering.',
-  },
-  {
-    icon: <Hand className="h-10 w-10 text-primary" />,
-    title: 'Shrub Transplanting',
-    description: 'Safely moving and transplanting shrubs to new locations within your landscape.',
-  },
-  {
-    icon: <Sprout className="h-10 w-10 text-primary" />,
-    title: 'Tree & Shrub Planting',
-    description: 'Professional planting of new trees and shrubs to enhance the beauty and value of your property.',
-  },
-  {
-    icon: <Leaf className="h-10 w-10 text-primary" />,
-    title: 'Lawn Care',
-    description: 'Meticulous lawn mowing, edging, and fertilization to keep your grass green and healthy.',
-  },
-  {
-    icon: <Axe className="h-10 w-10 text-primary" />,
-    title: 'Shrub Removal',
-    description: 'Efficient removal of unwanted or overgrown shrubs, including root systems.',
-  },
-  {
-    icon: <TreePine className="h-10 w-10 text-primary" />,
-    title: 'Tree Care Services',
-    description: 'Expert tree pruning, removal, and health assessments to ensure the safety and beauty of your property.',
+    icon: <Flower className="h-8 w-8 text-primary" />,
+    title: 'Custom Projects',
+    description: 'Bringing your specific landscaping ideas to life with custom installations and renovations.',
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 bg-card">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">Our Services</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section id="services" className="py-16 sm:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Our Services</h2>
+          <p className="mt-4 text-lg text-foreground/80">
+            We offer a comprehensive range of landscaping services tailored to meet your needs and exceed your expectations.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-            <Card key={index} className="text-center transition-transform transform hover:scale-105 hover:shadow-xl flex flex-col">
-              <CardHeader>
-                <div className="mx-auto bg-secondary p-4 rounded-full w-fit">
-                  {service.icon}
-                </div>
-                <CardTitle className="mt-4 font-headline">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground">{service.description}</p>
-              </CardContent>
-            </Card>
+            <div key={index} className="bg-background p-6 rounded-xl border border-border">
+              <div className="text-primary">
+                {service.icon}
+              </div>
+              <h3 className="mt-4 text-lg font-bold">{service.title}</h3>
+              <p className="mt-2 text-sm text-foreground/70">{service.description}</p>
+            </div>
           ))}
         </div>
       </div>

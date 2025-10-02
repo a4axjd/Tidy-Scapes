@@ -1,12 +1,19 @@
 "use client";
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { getProjects } from '@/lib/firebase-data';
-import { Card, CardContent } from '@/components/ui/card';
 import { useState, useEffect } from 'react';
 import type { Project } from '@/lib/firebase-data';
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function Gallery() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -46,24 +53,56 @@ export default function Gallery() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <div key={project.slug} className="group relative overflow-hidden rounded-lg shadow-lg">
-                <Link href={`/blog/${project.slug}`}>
-                    <div className="w-full h-96 relative">
-                        <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-                            data-ai-hint={project.hint}
-                        />
+             <Dialog key={project.slug}>
+                <DialogTrigger asChild>
+                    <div className="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer">
+                        <div className="w-full h-96 relative">
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                data-ai-hint={project.hint}
+                            />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 ease-in-out transform translate-y-[calc(100%-4.5rem)] group-hover:translate-y-0">
+                            <h3 className="text-2xl font-bold text-white leading-tight">{project.title}</h3>
+                            <div className="mt-2 text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">View Details &rarr;</div>
+                        </div>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 ease-in-out transform translate-y-[calc(100%-4.5rem)] group-hover:translate-y-0">
-                        <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                        <div className="mt-2 text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">View Details &rarr;</div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-3xl">
+                    <DialogHeader>
+                        <DialogTitle className="text-3xl font-bold mb-2">{project.title}</DialogTitle>
+                        <DialogDescription className="text-base text-muted-foreground">
+                            {project.description}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+                        <div className="relative aspect-video w-full rounded-lg overflow-hidden">
+                             <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                className="object-cover"
+                                data-ai-hint={project.hint}
+                            />
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-lg mb-3">Project Details</h4>
+                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                                {project.details.map((detail, index) => (
+                                    <li key={index}>{detail}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                </Link>
-            </div>
+                    <DialogFooter>
+                        <Button variant="outline" asChild><a href="/contact">Get a Quote for a Similar Project</a></Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
           ))}
         </div>
       </div>

@@ -66,7 +66,7 @@ export default function Gallery() {
                             />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-                        <div className="absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 ease-in-out transform translate-y-[calc(100%-4rem)] group-hover:translate-y-0 group-hover:bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-12">
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
                             <h3 className="text-2xl font-bold text-white leading-tight">{project.title}</h3>
                             <div className="mt-2 text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">View Details &rarr;</div>
                         </div>

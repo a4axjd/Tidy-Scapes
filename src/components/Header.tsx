@@ -5,9 +5,10 @@ import MobileNav from './MobileNav';
 const navLinks = [
     { href: "/#services", text: "Services" },
     { href: "/gallery", text: "Gallery" },
-    { href: "/contact", text: "Contact" },
     { href: "/portfolio", text: "Portfolio" },
     { href: "/blog", text: "Blog" },
+    { href: "/visualizer", text: "AI Visualizer" },
+    { href: "/contact", text: "Contact" },
 ];
 
 const TidyScapesLogo = () => (

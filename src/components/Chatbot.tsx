@@ -7,31 +7,74 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { MessageCircle, Send, X, Bot, User } from 'lucide-react';
-import { chat } from '@/ai/flows/chatbot-flow';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, ChatSession } from "@google/generative-ai";
+import { useToast } from '@/hooks/use-toast';
 
 interface Message {
   text: string;
   sender: 'user' | 'bot';
 }
 
+const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "";
+
+const safetySettings = [
+  { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+  { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
+];
+
+const generationConfig = {
+  temperature: 0.9,
+  topK: 1,
+  topP: 1,
+  maxOutputTokens: 2048,
+};
+
+const systemInstruction = `You are a friendly and helpful chatbot for TidyScapes, a landscaping company.
+Your goal is to answer user questions about our services (Lawn Care, Garden Design, Tree Services, Custom Projects), our portfolio, and our company.
+Keep your answers concise and encouraging.
+If you don't know the answer to a question, politely say so and suggest they contact the company directly through the contact form.`;
+
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [chatSession, setChatSession] = useState<ChatSession | null>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (isOpen) {
-        setMessages([{
-            text: "Hello! I'm the TidyScapes assistant. How can I help you with your landscaping needs today?",
-            sender: 'bot'
-        }]);
+      if (!API_KEY) {
+        toast({
+          title: "Chatbot Error",
+          description: "Missing API key for chatbot service.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      const genAI = new GoogleGenerativeAI(API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+      const newChatSession = model.startChat({
+        generationConfig,
+        safetySettings,
+        history: [],
+      });
+
+      setChatSession(newChatSession);
+
+      setMessages([{
+          text: "Hello! I'm the TidyScapes assistant. How can I help you with your landscaping needs today?",
+          sender: 'bot'
+      }]);
     }
-  }, [isOpen]);
+  }, [isOpen, toast]);
 
   useEffect(() => {
-    // Auto-scroll to bottom
     if (scrollAreaRef.current) {
         const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
         if (viewport) {
@@ -41,18 +84,21 @@ export default function Chatbot() {
   }, [messages]);
 
   const handleSend = async () => {
-    if (input.trim() === '') return;
+    if (input.trim() === '' || !chatSession) return;
 
     const userMessage: Message = { text: input, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
+    const prompt = input;
     setInput('');
     setLoading(true);
 
     try {
-      const botResponse = await chat(input);
-      const botMessage: Message = { text: botResponse, sender: 'bot' };
+      const result = await chatSession.sendMessage(prompt);
+      const response = result.response;
+      const botMessage: Message = { text: response.text(), sender: 'bot' };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error(error);
       const errorMessage: Message = { text: "Sorry, I'm having trouble connecting. Please try again later.", sender: 'bot' };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -125,9 +171,9 @@ export default function Chatbot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                disabled={loading}
+                disabled={loading || !chatSession}
               />
-              <Button size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8" onClick={handleSend} disabled={loading}>
+              <Button size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8" onClick={handleSend} disabled={loading || !chatSession}>
                 <Send className="h-4 w-4" />
               </Button>
             </div>

@@ -15,7 +15,7 @@ const navLinks = [
 ];
 
 const TidyScapesLogo = () => (
-    <Image src="/file.svg" alt="Tidy Scapes Logo" width={38} height={38} />
+    <Image src="/TidyScapes.png" alt="Tidy Scapes Logo" width={38} height={38} />
 );
 
 export default function Header() {

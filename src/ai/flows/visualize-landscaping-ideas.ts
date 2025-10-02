@@ -20,6 +20,13 @@ const VisualizeLandscapingIdeasInputSchema = z.object({
   includeLawnCare: z.boolean().describe('Whether to include lawn care in the visualization.'),
   includeGardenDesign: z.boolean().describe('Whether to include garden design in the visualization.'),
   includeTreeServices: z.boolean().describe('Whether to include tree services in the visualization.'),
+  includeLandscapeMaintenance: z.boolean().describe('Whether to include landscape maintenance.'),
+  includeShrubCare: z.boolean().describe('Whether to include shrub care.'),
+  includeShrubPruning: z.boolean().describe('Whether to include shrub pruning or trimming.'),
+  includeShrubTransplanting: z.boolean().describe('Whether to include shrub transplanting.'),
+  includeTreePlanting: z.boolean().describe('Whether to include tree planting.'),
+  includeShrubPlanting: z.boolean().describe('Whether to include shrub planting.'),
+  includeShrubRemoval: z.boolean().describe('Whether to include shrub removal.'),
 });
 export type VisualizeLandscapingIdeasInput = z.infer<typeof VisualizeLandscapingIdeasInputSchema>;
 
@@ -37,26 +44,6 @@ export async function visualizeLandscapingIdeas(
   return visualizeLandscapingIdeasFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'visualizeLandscapingIdeasPrompt',
-  input: {schema: VisualizeLandscapingIdeasInputSchema},
-  output: {schema: VisualizeLandscapingIdeasOutputSchema},
-  prompt: `You are a landscaping design visualizer. You will generate an image based on the user's property photo and landscaping preferences.
-
-  Consider the following options for the landscaping:
-  {{#if includeLawnCare}} Lawn care: Include details such as mowing, edging, and fertilization. {{/if}}
-  {{#if includeGardenDesign}} Garden design: Add flower beds, shrubs, and decorative elements. {{/if}}
-  {{#if includeTreeServices}} Tree services: Incorporate tree trimming, planting, or removal as needed. {{/if}}
-
-  Here is the user's property photo:
-  {{media url=photoDataUri}}
-
-  Generate a new image of the property incorporating these landscaping ideas, and a description of the changes.
-  Please make the generated image as realistic as possible.
-  The description will summarize the landscaping changes you made to the image.
-  `,
-});
-
 const visualizeLandscapingIdeasFlow = ai.defineFlow(
   {
     name: 'visualizeLandscapingIdeasFlow',
@@ -64,21 +51,32 @@ const visualizeLandscapingIdeasFlow = ai.defineFlow(
     outputSchema: VisualizeLandscapingIdeasOutputSchema,
   },
   async input => {
+    const servicePrompts = [
+        input.includeLawnCare ? 'Lawn care: Include details such as mowing, edging, and fertilization.' : '',
+        input.includeGardenDesign ? 'Garden design: Add flower beds, shrubs, and decorative elements.' : '',
+        input.includeTreeServices ? 'Tree services: Incorporate tree trimming, planting, or removal as needed.' : '',
+        input.includeLandscapeMaintenance ? 'Landscape maintenance: Show a well-maintained and tidy landscape.' : '',
+        input.includeShrubCare ? 'Shrub care: Ensure shrubs are healthy and vibrant.' : '',
+        input.includeShrubPruning ? 'Shrub pruning: Trim and shape shrubs for optimal health and aesthetics.' : '',
+        input.includeShrubTransplanting ? 'Shrub transplanting: Show shrubs moved to new, suitable locations.' : '',
+        input.includeTreePlanting ? 'Tree planting: Add new, strategically placed trees.' : '',
+        input.includeShrubPlanting ? 'Shrub planting: Add new shrubs to enhance garden beds.' : '',
+        input.includeShrubRemoval ? 'Shrub removal: Remove any overgrown or unwanted shrubs.' : '',
+    ].filter(Boolean).join('\n');
+
+    const promptText = `You are a landscaping design visualizer. You will generate an image based on the user's property photo and landscaping preferences.
+
+Consider the following options for the landscaping:
+${servicePrompts}
+
+Generate a new image of the property incorporating these landscaping ideas, and a description of the changes.
+Please make the generated image as realistic as possible.
+The description will summarize the landscaping changes you made to the image.`;
+
     const {media, text} = await ai.generate({
       prompt: [
         {media: {url: input.photoDataUri}},
-        {
-          text: `You are a landscaping design visualizer. You will generate an image based on the user's property photo and landscaping preferences.
-
-        Consider the following options for the landscaping:
-        ${input.includeLawnCare ? 'Lawn care: Include details such as mowing, edging, and fertilization.' : ''}
-        ${input.includeGardenDesign ? 'Garden design: Add flower beds, shrubs, and decorative elements.' : ''}
-        ${input.includeTreeServices ? 'Tree services: Incorporate tree trimming, planting, or removal as needed.' : ''}
-
-        Generate a new image of the property incorporating these landscaping ideas, and a description of the changes.
-        Please make the generated image as realistic as possible.
-        The description will summarize the landscaping changes you made to the image.`,
-        },
+        { text: promptText },
       ],
       model: googleAI.model('gemini-2.0-flash-preview-image-generation'),
       config: {

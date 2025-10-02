@@ -13,6 +13,19 @@ import Image from 'next/image';
 import { UploadCloud, Sparkles, Wand2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const services = [
+    { id: 'includeLawnCare', label: 'Lawn Care' },
+    { id: 'includeGardenDesign', label: 'Garden Design' },
+    { id: 'includeTreeServices', label: 'Tree Services' },
+    { id: 'includeLandscapeMaintenance', label: 'Landscape Maintenance' },
+    { id: 'includeShrubCare', label: 'Shrub Care' },
+    { id: 'includeShrubPruning', label: 'Shrub Pruning/Trimming' },
+    { id: 'includeShrubTransplanting', label: 'Shrub Transplanting' },
+    { id: 'includeTreePlanting', label: 'Tree Planting' },
+    { id: 'includeShrubPlanting', label: 'Shrub Planting' },
+    { id: 'includeShrubRemoval', label: 'Shrub Removal' },
+];
+
 export default function Visualizer() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -20,6 +33,13 @@ export default function Visualizer() {
     includeLawnCare: true,
     includeGardenDesign: true,
     includeTreeServices: false,
+    includeLandscapeMaintenance: false,
+    includeShrubCare: false,
+    includeShrubPruning: false,
+    includeShrubTransplanting: false,
+    includeTreePlanting: false,
+    includeShrubPlanting: false,
+    includeShrubRemoval: false,
   });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VisualizeLandscapingIdeasOutput | null>(null);
@@ -109,17 +129,17 @@ export default function Visualizer() {
                 </div>
                 <div className="space-y-4">
                     <Label>Select Services to Visualize</Label>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox id="lawnCare" checked={options.includeLawnCare} onCheckedChange={() => handleOptionChange('includeLawnCare')} />
-                        <Label htmlFor="lawnCare" className="font-normal">Lawn Care</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox id="gardenDesign" checked={options.includeGardenDesign} onCheckedChange={() => handleOptionChange('includeGardenDesign')} />
-                        <Label htmlFor="gardenDesign" className="font-normal">Garden Design</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox id="treeServices" checked={options.includeTreeServices} onCheckedChange={() => handleOptionChange('includeTreeServices')} />
-                        <Label htmlFor="treeServices" className="font-normal">Tree Services</Label>
+                    <div className="grid grid-cols-2 gap-4">
+                        {services.map(service => (
+                            <div key={service.id} className="flex items-center space-x-2">
+                                <Checkbox 
+                                    id={service.id} 
+                                    checked={options[service.id as keyof typeof options]} 
+                                    onCheckedChange={() => handleOptionChange(service.id as keyof typeof options)} 
+                                />
+                                <Label htmlFor={service.id} className="font-normal">{service.label}</Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
               </CardContent>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import Analytics from '@/components/Analytics';
+import { Analytics } from "@vercel/analytics/next"
 import Chatbot from '@/components/Chatbot';
 
 export const metadata: Metadata = {

@@ -38,27 +38,32 @@ export default function Gallery() {
   }
 
   return (
-    <section id="gallery" className="py-20">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">Gallery</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <section id="gallery" className="py-16 md:py-24">
+      <div className="container mx-auto px-6">
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gray-900 dark:text-white">Our Landscaping Projects</h2>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">Explore our portfolio of successful landscaping transformations, showcasing our commitment to quality and client satisfaction.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <Card key={project.slug} className="overflow-hidden group relative">
-                <Link href={`/portfolio/${project.slug}`} className="block">
-                    <div className="relative aspect-square">
+            <div key={project.slug} className="group relative overflow-hidden rounded-lg shadow-lg">
+                <Link href={`/portfolio/${project.slug}`}>
+                    <div className="w-full h-96 relative">
                         <Image
                             src={project.image}
                             alt={project.title}
                             fill
-                            className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                             data-ai-hint={project.hint}
                         />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                            <h3 className="text-white text-lg font-bold text-center">{project.title}</h3>
-                        </div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 p-6 transition-all duration-500 ease-in-out transform translate-y-1/2 group-hover:translate-y-0">
+                        <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+                        <div className="mt-2 inline-block text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">View Details &rarr;</div>
                     </div>
                 </Link>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
